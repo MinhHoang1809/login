@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="post-form">
+        <input type="text" name="title" id="">
+        <input type="text" name="categoryId" id="" value="100">
+        <textarea name="description" ></textarea>
+        <input type="file" name="imageFile" accept="image/*">
+        <input type="button" value="Add" onclick="addPost()">
+
+    </form>
+    <script>
+        const BASE_URL = "http://103.237.144.156:8080/api"
+        const ADD_POST_URL = BASE_URL + "/member/post/add"
+
+        addPost = async () => {
+            let fromData = new FormData(document.getElementById("post-form"))
+            let token = btoa("0123456789:123456")
+
+            try {
+                let resp = await fetch(ADD_POST_URL, {
+                    method: "POST",
+                    headers: {
+                        "Authorization" : "Base " + token,
+                        "Accept": "*/*"
+                    },
+                    body: fromData
+                })
+            console.log(resp);
+            if(resp.ok){
+                let post = await resp.json();
+                console.log(post)
+            }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    </script>
+</body>
+</html>
